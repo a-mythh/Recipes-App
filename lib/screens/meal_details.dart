@@ -1,21 +1,48 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+// providers
+
+// models
 import 'package:meals_app/models/meal.dart';
+import 'package:meals_app/providers/favorites_provider.dart';
 
-class MealDetailsScreen extends StatelessWidget {
-  const MealDetailsScreen({required this.meal, required this.onToggleFavorite, super.key});
+class MealDetailsScreen extends ConsumerWidget {
+  const MealDetailsScreen({required this.meal, super.key});
 
-  final Meal meal;
-  final void Function(Meal meal) onToggleFavorite;
+    final Meal meal;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) 
+  {
+    final favoriteMeals = ref.watch(favoriteMealsProvider);
+
+    final isFavorite = favoriteMeals.contains(meal);
+
     return Scaffold(
         appBar: AppBar(title: Text(meal.title), actions: [
           IconButton(
             onPressed: () {
-              onToggleFavorite(meal);
+              final wasAdded = ref
+                  .read(favoriteMealsProvider.notifier)
+                  .toggleMealFavoriteStatus(meal);
+
+              ScaffoldMessenger.of(context).clearSnackBars();
+              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                content: Text(
+                  wasAdded ? 'Marked as favorite!' : 'Meal has been removed :(',
+                  textAlign: TextAlign.center,
+                ),
+                backgroundColor: Theme.of(context).colorScheme.secondary,
+                behavior: SnackBarBehavior.floating,
+                elevation: 20,
+                width: 220,
+                dismissDirection: DismissDirection.horizontal,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10)),
+              ));
             },
-            icon: const Icon(Icons.star_border_rounded),
+            icon: Icon(isFavorite ? Icons.star_rounded : Icons.star_border_rounded),
           ),
         ]),
         body: SingleChildScrollView(
