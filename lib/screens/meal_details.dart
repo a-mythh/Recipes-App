@@ -10,11 +10,10 @@ import 'package:meals_app/providers/favorites_provider.dart';
 class MealDetailsScreen extends ConsumerWidget {
   const MealDetailsScreen({required this.meal, super.key});
 
-    final Meal meal;
+  final Meal meal;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) 
-  {
+  Widget build(BuildContext context, WidgetRef ref) {
     final favoriteMeals = ref.watch(favoriteMealsProvider);
 
     final isFavorite = favoriteMeals.contains(meal);
@@ -42,17 +41,34 @@ class MealDetailsScreen extends ConsumerWidget {
                     borderRadius: BorderRadius.circular(10)),
               ));
             },
-            icon: Icon(isFavorite ? Icons.star_rounded : Icons.star_border_rounded),
+            icon: AnimatedSwitcher(
+              duration: const Duration(milliseconds: 300),
+              transitionBuilder: (child, animation) {
+                return ScaleTransition(
+                  // scale: animation,
+                  scale: Tween(begin: 0.0, end: 1.0).animate(animation),
+                  child: child,
+                );
+              },
+              child: Icon(
+                isFavorite ? Icons.star_rounded : Icons.star_border_rounded,
+                key: ValueKey(isFavorite),
+              ),
+            ),
           ),
         ]),
         body: SingleChildScrollView(
           child: Column(
             children: [
-              Image.network(
-                meal.imageUrl,
-                fit: BoxFit.cover,
-                height: 300,
-                width: double.infinity,
+              // Image
+              Hero(
+                tag: meal.id,
+                child: Image.network(
+                  meal.imageUrl,
+                  fit: BoxFit.cover,
+                  height: 300,
+                  width: double.infinity,
+                ),
               ),
               const SizedBox(height: 15),
               Text(
