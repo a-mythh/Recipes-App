@@ -31,7 +31,7 @@ To run this app, ensure you have Flutter installed on your machine.
 
 1. Clone this repository:
    ```bash
-   git clone https://github.com/a-mythh/Meals-App.git
+   git clone https://github.com/a-mythh/Recipes-App.git
    ```
 2. Navigate to the project directory:
    ```bash
@@ -46,11 +46,11 @@ To run this app, ensure you have Flutter installed on your machine.
 
 ### Android
 
-- [Android App](https://github.com/a-mythh/Meals-App/raw/main/installers/recipes.apk)
+- [Android App](https://github.com/a-mythh/Recipes-App/raw/main/installers/recipes.apk)
 
 ### Windows
 
-- [Windows App](https://github.com/a-mythh/Meals-App/raw/main/installers/setup.exe)
+- [Windows App](https://github.com/a-mythh/Recipes-App/raw/main/installers/setup.exe)
 
 ## Usage
 
@@ -72,7 +72,7 @@ If you'd like to contribute to the development of this app, please follow these 
 
 ## Issues
 
-If you encounter any issues with the app, please [report them here](https://github.com/a-mythh/Meals-App/issues).
+If you encounter any issues with the app, please [report them here](https://github.com/a-mythh/Recipes-App/issues).
 
 ## Contact
 
